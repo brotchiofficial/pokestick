@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PokéApp — Full Fixed</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main id="auth">
+    <section class="card auth-card">
+      <h1>Connexion</h1>
+      <form id="loginForm">
+        <label>Pseudo
+          <input type="text" id="login-username" autocomplete="username" required />
+        </label>
+        <label>Mot de passe
+          <input type="password" id="login-password" autocomplete="current-password" required />
+        </label>
+        <button type="submit" id="login-btn">Continuer</button>
+      </form>
+      <div class="sep"><span></span><em>ou</em><span></span></div>
+      <details class="register">
+        <summary>Créer un compte</summary>
+        <form id="registerForm">
+          <label>Choisir un pseudo
+            <input type="text" id="reg-username" required />
+          </label>
+          <label>Choisir un mot de passe
+            <input type="password" id="reg-password" required />
+          </label>
+          <button type="submit" id="register-btn">S'inscrire</button>
+        </form>
+      </details>
+      <p class="note">Comptes stockés dans Firestore (<code>user</code>) avec hash SHA‑256. Aucun mot de passe en clair.</p>
+      <p id="auth-msg" class="msg" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <div id="app" class="app hidden">
+    <header class="app-header">
+      <nav class="left">
+        <button id="logout" title="Se déconnecter">⟵</button>
+      </nav>
+      <div class="center"><strong>PokéApp</strong></div>
+      <div class="right">
+        <span id="header-username">@?</span>
+        <div class="energy">
+          <div id="energy-bar" class="energy-bar" aria-label="Énergie (0-10)"></div>
+          <div id="energy-timer" class="energy-timer">+1 énergie dans —:—</div>
+        </div>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <h2>Menu</h2>
+        <ul>
+          <li><button class="nav" data-view="booster">Booster</button></li>
+          <li><button class="nav" data-view="combat">Combat</button></li>
+          <li><button class="nav" data-view="collection">Ma collection</button></li>
+        </ul>
+      </aside>
+
+      <section class="content">
+        <div id="dashboard" class="view">
+          <h2 id="hello">Bonjour !</h2>
+          <p id="card-count">Tu as 0 carte.</p>
+          <p class="hint">Ouvre des boosters pour agrandir ta collection. L'énergie se recharge automatiquement (+1 / 5 min).</p>
+        </div>
+
+        <div id="view-booster" class="view hidden">
+          <h2>Booster</h2>
+          <div class="toolbar">
+            <button id="load-sets">Charger la liste des séries</button>
+            <label class="compact">Taille du pack
+              <select id="pack-size">
+                <option value="5" selected>5</option>
+                <option value="10">10</option>
+              </select>
+            </label>
+            <label class="compact"><input type="checkbox" id="anim-enabled" checked/> Animations</label>
+            <span id="sets-status" class="muted"></span>
+          </div>
+          <div id="sets-list" class="accordion"></div>
+        </div>
+
+        <div id="view-combat" class="view hidden">
+          <h2>Combat</h2>
+          <p class="hint">Zone de combat (à faire plus tard).</p>
+        </div>
+
+        <div id="view-collection" class="view hidden">
+          <h2>Ma collection</h2>
+          <div id="collection-grid" class="grid"></div>
+          <p class="hint">Les cartes obtenues via les boosters s’affichent ici.</p>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- Fullscreen overlay for pack opening -->
+  <div id="overlay" class="overlay hidden" role="dialog" aria-modal="true">
+    <div class="overlay-inner">
+      <div id="overlay-card" class="card3d">
+        <img id="overlay-image" alt="" />
+      </div>
+      <div id="overlay-meta" class="overlay-meta"></div>
+      <div class="overlay-tip">Clique pour voir la carte suivante</div>
+    </div>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
